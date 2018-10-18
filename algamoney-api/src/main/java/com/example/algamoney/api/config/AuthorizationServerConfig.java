@@ -1,6 +1,5 @@
 package com.example.algamoney.api.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +15,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 	
-	@Autowired
+
 	private AuthenticationManager authenticationManager;
 	
 	@Override
@@ -25,6 +24,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.withClient("angular")
 			.secret("@ngul@ar0")
 			.scopes("read", "write")
+			.authorizedGrantTypes("password", "refresh_token")
+			.accessTokenValiditySeconds(1800)
+			.refreshTokenValiditySeconds(3600*24)
+		.and()
+			.withClient("mobile")
+			.secret("m0bil30")
+			.scopes("read")
 			.authorizedGrantTypes("password", "refresh_token")
 			.accessTokenValiditySeconds(1800)
 			.refreshTokenValiditySeconds(3600*24);
